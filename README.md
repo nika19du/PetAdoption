@@ -1,2 +1,2 @@
-# PetAdoption_WebAssemblyBlazor
+# PetAdoption WebAssemblyBlazor
 Building Application with Blazor
