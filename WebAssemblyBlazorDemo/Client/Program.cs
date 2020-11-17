@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
+using WebAssemblyBlazorDemo.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 
 namespace WebAssemblyBlazorDemo.Client
 {
@@ -15,6 +15,11 @@ namespace WebAssemblyBlazorDemo.Client
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddBaseAddressHttpClient();
+             
+            // Supply HttpClient instances that include access tokens when making requests to the server project
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("AnimalShelter.ServerAPI"));
+            builder.Services.AddSingleton<IAnimalService, AnimalService>();
+            builder.Services.AddSingleton<IProductService, ProductService>();
 
             await builder.Build().RunAsync();
         }

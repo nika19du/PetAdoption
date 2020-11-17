@@ -8,8 +8,8 @@
     <td>@Product.NetPrice</td>
 
     <td>
-    <button type="button" class="btn btn-primary">Details</button>
-    <button class="btn btn-danger">Delete</button>
+    <button type="button" class="btn btn-primary" @onclick="ShowDetails">Details</button>
+    <button class="btn btn-danger" @onclick="DeleteProduct">Delete</button>
     </td>
 </tr>
 
@@ -18,4 +18,19 @@
     [Parameter]
     public Product Product { get; set; }
 
+    [Parameter]
+    public EventCallback<Product> OnProductDeleted { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    private void DeleteProduct()
+    {
+        OnProductDeleted.InvokeAsync(Product);
+    }
+
+    private void ShowDetails()
+    {
+        NavigationManager.NavigateTo($"/ProductDetail/{Product.Id}");
+    }
 }
